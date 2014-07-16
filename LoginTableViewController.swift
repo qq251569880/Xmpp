@@ -9,6 +9,10 @@
 
 import UIKit
 
+let USERID:String = "userId"
+let PASS:String = "Pass"
+let SERVER:String = "Server"
+
 class LoginTableViewController: UITableViewController,UITextFieldDelegate {
 
     @IBOutlet var userText : UITextField
@@ -36,9 +40,9 @@ class LoginTableViewController: UITableViewController,UITextFieldDelegate {
         if err == 0 {
             
             var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(userText.text,forKey:"USERID")
-            defaults.setObject(passwdText.text,forKey:"PASS")
-            defaults.setObject(serverText.text,forKey:"SERVER")
+            defaults.setObject(userText.text,forKey:USERID)
+            defaults.setObject(passwdText.text,forKey:PASS)
+            defaults.setObject(serverText.text,forKey:SERVER)
             defaults.synchronize()
             self.dismissModalViewControllerAnimated(true)
             

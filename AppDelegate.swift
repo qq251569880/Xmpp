@@ -43,7 +43,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    func setupStream(){
+    
+        //初始化XMPPStream
 
+        xmppStream.addDelegate(self,delegateQueue:dispatch_get_current_queue());
+    
+    }
+    
+    func goOnline(){
+    
+        //发送在线状态
+        var presence:XMPPPresence = XMPPPresence()
+        xmppStream.sendElement(presence)
+    
+    }
+    
+    func goOffline(){
+    
+        //发送下线状态
+        var presence:XMPPPresence = XMPPPresence(type:"unavailable");
+        xmppStream.sendElement(presence)
+    
+    }
+    
+    func connect() -> Bool{
+    
+        self.setupStream()
+    
+        //从本地取得用户名，密码和服务器地址
+        var defaults:NSUserDefaults  = NSUserDefaults.standardUserDefaults()
+        
+        var userId:NSString  = defaults.stringForKey(USERID)
+        var pass:NSString = defaults.stringForKey(PASS)
+        var server:NSString = defaults.stringForKey(SERVER)
+        
+        if (!xmppStream.isDisconnected()) {
+            return true
+        }
+        
+        if (userId == "" || pass == "") {
+            return false;
+        }
+        
+        //设置用户
+        xmppStream.myJID = XMPPJID.jidWithString(userId);
+        //设置服务器
+        xmppStream.hostName = server;
+        //密码
+        password = pass;
+        
+        //连接服务器
+        var error:NSError? ;
+        if (!xmppStream.connectWithTimeout(10,error: &error)) {
+            println("cant connect %@", server);
+            return false;
+        }
+    
+        return true;
+    
+    }
+    
+    func disconnect(){
+    
+        self.goOffline()
+        xmppStream.disconnect()
+    
+    }
 
 }
+
+
+
+
+
 
