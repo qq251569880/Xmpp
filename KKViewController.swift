@@ -38,7 +38,6 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
             if (self.appDelegate().connect()) {
                 println("show buddy list")
                 
-                newBuddyOnline("myself")
             }
             
         }else {
@@ -84,6 +83,7 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
             println("cell is nil")
         }
         cell!.textLabel.text = onlineUsers[indexPath!.row]
+        println("add user \(onlineUsers[indexPath!.row])")
         return cell!
     }
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int{
@@ -93,11 +93,12 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
         //start a Chat
         chatUserName = onlineUsers[indexPath.row];
-        
+        println("Now chatting with \(chatUserName)")
+
         self.performSegueWithIdentifier("chat",sender:self)
         
     }
-    func prepareForSegue(segue:UIStoryboardSegue ){
+    override func prepareForSegue(segue:UIStoryboardSegue,sender:AnyObject ){
         
         if (segue.identifier == "chat") {
             var chatController:ChatViewController  = segue.destinationViewController as ChatViewController;

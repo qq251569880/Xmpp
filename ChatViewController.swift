@@ -169,6 +169,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             mes.addAttributeWithName("type",stringValue:"chat")
             //发送给谁
             mes.addAttributeWithName("to" ,stringValue:chatWithUser)
+            println("send to \(chatWithUser)")
             //由谁发送
             mes.addAttributeWithName("from" ,stringValue:NSUserDefaults.standardUserDefaults().stringForKey(USERID) as NSString)
             //组合

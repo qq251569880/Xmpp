@@ -129,18 +129,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //收到消息
-    func xmppStream(sender:XMPPStream ,didReceiveMessage message:XMPPMessage ){
+    func xmppStream(sender:XMPPStream ,didReceiveMessage message:XMPPMessage? ){
     
         //    NSLog(@"message = %@", message);
-        
-        var cont:String = message.elementForName("body").stringValue();
-        var from:String = message.attributeForName("from").stringValue();
-        
-        var msg:Message = Message(content:cont,sender:from,ctime:getCurrentTime())
-
-        
-        //消息委托(这个后面讲)
-        messageDelegate?.newMessageReceived(msg);
+        if message != nil {
+            var cont:String = message!.elementForName("body").stringValue();
+            var from:String = message!.attributeForName("from").stringValue();
+            
+            var msg:Message = Message(content:cont,sender:from,ctime:getCurrentTime())
+            
+            
+            //消息委托(这个后面讲)
+            messageDelegate?.newMessageReceived(msg);
+        }
     
     }
     
@@ -159,7 +160,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (!presenceFromUser.isEqualToString(userId)) {
             
             //在线状态
-            var srv:String = "nqc1338a"
+            var srv:String = "macshare.local"
             if (presenceType.isEqualToString("available")) {
                 
                 //用户列表委托(后面讲)
