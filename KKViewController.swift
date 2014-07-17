@@ -8,18 +8,18 @@
 
 import UIKit
 
-class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ChatDelegate {
+class KKViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ChatDelegate {
     
     var onlineUsers = String[]()
     var chatUserName:String = ""
-    @IBOutlet var tView : UITableView
+    @IBOutlet var tView : UITableView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"账号", style: .Plain, target:self, action:"Account:")
-        self.tView.delegate = self
-        self.tView.dataSource = self
+        self.tView!.delegate = self
+        self.tView!.dataSource = self
         
         //设定在线用户委托
         var del:AppDelegate = self.appDelegate();
@@ -39,7 +39,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         }else {
             
             //设定用户
-            self.Account()
+            self.Account(self)
             
         }
 
@@ -50,10 +50,10 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     }
 
 
-    
-    func Account(){
+    @IBAction func Account(sender : AnyObject) {
         self.performSegueWithIdentifier("login",sender:self)
     }
+
     //UITableViewDataSource协议实现
     func tableView(tableView: UITableView?, cellForRowAtIndexPath: NSIndexPath?) ->UITableViewCell{
         let identifier:String = "userCell"
@@ -105,7 +105,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         }
         if i == onlineUsers.count{
             onlineUsers.append(buddyName)
-            self.tView.reloadData();
+            self.tView!.reloadData();
         }
 
     }
@@ -114,7 +114,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         for user in onlineUsers{
             if (user == buddyName) {
                 onlineUsers.removeAtIndex(i)
-                self.tView.reloadData();
+                self.tView!.reloadData();
                 break
             }
             i++

@@ -111,26 +111,10 @@
             </objects>
             <point key="canvasLocation" x="-1840" y="-275"/>
         </scene>
-        <!--Navigation Controller - acount-->
-        <scene sceneID="LgW-aa-hob">
-            <objects>
-                <navigationController title="acount" toolbarHidden="NO" id="ytx-xl-0fl" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5lq-y3-30J">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="cwV-re-zid" kind="relationship" relationship="rootViewController" id="ESX-aU-Mzg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pnz-i1-3Wd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2402" y="-450"/>
-        </scene>
-        <!--Chat View Controller-->
+        <!--View Controller-->
         <scene sceneID="71p-HA-OS1">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="ugF-IO-bWr" customClass="ChatViewController" customModule="Xmpp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="ugF-IO-bWr" customClass="KKViewController" customModule="Xmpp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ubd-4y-hAX"/>
                         <viewControllerLayoutGuide type="bottom" id="SoL-lO-cxO"/>
@@ -140,14 +124,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PTN-Zj-ahi">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="69" width="320" height="499"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="ugF-IO-bWr" id="uHI-TU-eDi"/>
+                                    <outlet property="delegate" destination="ugF-IO-bWr" id="52w-k2-bqm"/>
+                                </connections>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rIf-gc-fHn">
+                                <rect key="frame" x="0.0" y="25" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="账号" id="Q7m-sC-kbV">
+                                        <connections>
+                                            <action selector="Account:" destination="ugF-IO-bWr" id="xjy-Vn-C90"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="0.49735415240000003" green="0.85388706800000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="hqS-fr-jTB"/>
                     <connections>
                         <outlet property="tView" destination="PTN-Zj-ahi" id="mNY-ej-Fqo"/>
                         <segue destination="Rak-ju-Wkk" kind="modal" identifier="chat" id="VBF-4a-R0E"/>
@@ -206,7 +203,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Ede-p1-Nmc"/>
-    </inferredMetricsTieBreakers>
 </document>
