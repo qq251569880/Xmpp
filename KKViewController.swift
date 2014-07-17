@@ -38,6 +38,7 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
             if (self.appDelegate().connect()) {
                 println("show buddy list")
                 
+                newBuddyOnline("myself")
             }
             
         }else {
@@ -73,7 +74,7 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
     }
 
     //UITableViewDataSource协议实现
-    func tableView(tableView: UITableView?, cellForRowAtIndexPath: NSIndexPath?) ->UITableViewCell{
+    func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) ->UITableViewCell{
         let identifier:String = "userCell"
         var cell : UITableViewCell? = tableView?.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell
         if cell == nil {
@@ -82,6 +83,7 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
         {
             println("cell is nil")
         }
+        cell!.textLabel.text = onlineUsers[indexPath!.row]
         return cell!
     }
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int{
@@ -98,8 +100,9 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
     func prepareForSegue(segue:UIStoryboardSegue ){
         
         if (segue.identifier == "chat") {
-            var msgController:MassageViewController  = segue.destinationViewController as MassageViewController;
-            msgController.chatWithUser = chatUserName;
+            var chatController:ChatViewController  = segue.destinationViewController as ChatViewController;
+            chatController.chatWithUser = chatUserName;
+            println("Now chatting with \(chatUserName)")
         }
     }
     //取得当前程序的委托

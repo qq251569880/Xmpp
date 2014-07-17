@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var cont:String = message.elementForName("body").stringValue();
         var from:String = message.attributeForName("from").stringValue();
         
-        var msg:Message = Message(content:cont,sender:from)
+        var msg:Message = Message(content:cont,sender:from,ctime:getCurrentTime())
 
         
         //消息委托(这个后面讲)
@@ -172,6 +172,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
     
+    }
+    func sendElement(mes:DDXMLElement){
+        xmppStream!.sendElement(mes)
     }
 
 }
