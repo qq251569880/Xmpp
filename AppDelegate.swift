@@ -13,7 +13,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
     var window: UIWindow?
-    var xmppStream:XMPPStream = XMPPStream()
+    var xmppStream:XMPPStream?
     var password:String = ""
     var isOpen:Bool = false
     var chatDelegate:ChatDelegate?
@@ -47,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupStream(){
     
         //初始化XMPPStream
-
-        xmppStream.addDelegate(self,delegateQueue:dispatch_get_current_queue());
+        xmppStream = XMPPStream()
+        xmppStream!.addDelegate(self,delegateQueue:dispatch_get_current_queue());
     
     }
     
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         //发送在线状态
         var presence:XMPPPresence = XMPPPresence()
-        xmppStream.sendElement(presence)
+        xmppStream!.sendElement(presence)
     
     }
     
@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         //发送下线状态
         var presence:XMPPPresence = XMPPPresence(type:"unavailable");
-        xmppStream.sendElement(presence)
+        xmppStream!.sendElement(presence)
     
     }
     
@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var pass:String = defaults.stringForKey(PASS)
         var server:String = defaults.stringForKey(SERVER)
         
-        if (!xmppStream.isDisconnected()) {
+        if (!xmppStream!.isDisconnected()) {
             return true
         }
         
@@ -88,15 +88,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //设置用户
-        xmppStream.myJID = XMPPJID.jidWithString(userId);
+        xmppStream!.myJID = XMPPJID.jidWithString(userId);
         //设置服务器
-        xmppStream.hostName = server;
+        xmppStream!.hostName = server;
         //密码
         password = pass;
         
         //连接服务器
         var error:NSError? ;
-        if (!xmppStream.connectWithTimeout(10,error: &error)) {
+        if (!xmppStream!.connectWithTimeout(10,error: &error)) {
             println("cant connect \(server)")
             return false;
         }
@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func disconnect(){
     
         self.goOffline()
-        xmppStream.disconnect()
+        xmppStream!.disconnect()
     
     }
     //XMPPStreamDelegate协议实现
@@ -118,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         isOpen = true;
         var error:NSError? ;
         //验证密码
-        xmppStream.authenticateWithPassword(password ,error:&error);
+        xmppStream!.authenticateWithPassword(password ,error:&error);
     
     }
     

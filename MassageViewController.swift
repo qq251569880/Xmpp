@@ -19,7 +19,7 @@ class MassageViewController: UIViewController,UITableViewDelegate, UITableViewDa
     @IBOutlet var MessageTextField : UITextField
     @IBOutlet var sendBtn : UIButton
     var chatWithUser = String()
-    @IBOutlet var tView : UITableView
+    @IBOutlet var tView : UITableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,7 @@ class MassageViewController: UIViewController,UITableViewDelegate, UITableViewDa
     //取得当前的XMPPStream
     func xmppStream() -> XMPPStream{
         
-        return self.appDelegate().xmppStream;
+        return self.appDelegate().xmppStream!;
     }
     //KKMessageDelegate
     func newMessageReceived(var msg:Message){

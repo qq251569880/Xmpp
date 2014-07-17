@@ -19,7 +19,6 @@ class LoginTableViewController: UITableViewController,UITextFieldDelegate {
     @IBOutlet var passwdText : UITextField
     @IBOutlet var serverText : UITextField
 
-    var chat : ChatViewController = ChatViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -45,9 +44,7 @@ class LoginTableViewController: UITableViewController,UITextFieldDelegate {
             defaults.setObject(serverText.text,forKey:SERVER)
             defaults.synchronize()
             self.dismissModalViewControllerAnimated(true)
-            
-            chat.view.frame = self.view.bounds
-            self.navigationController.pushViewController(chat,animated:true)
+
         }
     }
     func validText(usr:NSString,pass:NSString,server:NSString) -> Int{
