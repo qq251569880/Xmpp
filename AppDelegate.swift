@@ -96,11 +96,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //连接服务器
         var error:NSError? ;
-        if (!xmppStream!.connectWithTimeout(10,error: &error)) {
-            println("cant connect \(server)")
+        if (!xmppStream!.connectWithTimeout(XMPPStreamTimeoutNone,error: &error)) {
+            println("cannot connect \(server)")
             return false;
         }
-    
+        println("connect success!!!")
         return true;
     
     }

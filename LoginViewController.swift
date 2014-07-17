@@ -9,44 +9,48 @@
 
 import UIKit
 
-let USERID:String = "userId"
-let PASS:String = "Pass"
-let SERVER:String = "Server"
 
-class LoginTableViewController: UITableViewController,UITextFieldDelegate {
+
+class LoginViewController: UIViewController,UITextFieldDelegate {
 
     @IBOutlet var userText : UITextField
-    @IBOutlet var passwdText : UITextField
-    @IBOutlet var serverText : UITextField
 
+    @IBOutlet var passwdText : UITextField
+
+    @IBOutlet var serverText : UITextField
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //acountBtn.addTarget(self, action: "acountBtnClicked:", forControlEvents: .TouchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"返回", style: .Plain, target:self, action:"closeClicked")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title:"登录", style: .Plain, target:self, action:"loginClicked")
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func closeClicked(){
+    @IBAction func backClicked(sender : UIBarButtonItem) {
         self.dismissModalViewControllerAnimated(true)
     }
-    func loginClicked(){
+
+    @IBAction func loginClicked(sender : UIBarButtonItem) {
         var err = validText(userText.text, pass: passwdText.text, server: serverText.text)
         if err == 0 {
             
             var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(userText.text,forKey:USERID)
-            defaults.setObject(passwdText.text,forKey:PASS)
-            defaults.setObject(serverText.text,forKey:SERVER)
+            var user_text:NSString = userText.text
+            var pass_text:NSString = passwdText.text
+            var server_text:NSString = serverText.text
+            defaults.setObject(user_text,forKey:USERID)
+            defaults.setObject(pass_text,forKey:PASS)
+            defaults.setObject(server_text,forKey:SERVER)
             defaults.synchronize()
             self.dismissModalViewControllerAnimated(true)
-
+            
         }
+
     }
+
     func validText(usr:NSString,pass:NSString,server:NSString) -> Int{
         var alert:UIAlertView = UIAlertView()
         alert.title = "提示"

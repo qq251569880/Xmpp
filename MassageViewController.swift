@@ -19,7 +19,7 @@ class MassageViewController: UIViewController,UITableViewDelegate, UITableViewDa
     @IBOutlet var MessageTextField : UITextField
     @IBOutlet var sendBtn : UIButton
     var chatWithUser = String()
-    @IBOutlet var tView : UITableView = UITableView()
+    @IBOutlet var tView : UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()

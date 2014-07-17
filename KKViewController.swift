@@ -7,20 +7,20 @@
 //
 
 import UIKit
-
-class KKViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,ChatDelegate {
+let USERID:NSString = "userId"
+let PASS:NSString = "Pass"
+let SERVER:NSString = "Server"
+class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,ChatDelegate {
     
     var onlineUsers = String[]()
     var chatUserName:String = ""
-    @IBOutlet var tView : UITableView?
+    @IBOutlet var tView : UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title:"账号", style: .Plain, target:self, action:"Account:")
-        self.tView!.delegate = self
-        self.tView!.dataSource = self
-        
+        tView.delegate = self
+        tView.dataSource = self
         //设定在线用户委托
         var del:AppDelegate = self.appDelegate();
         del.chatDelegate = self;
@@ -28,21 +28,39 @@ class KKViewController: UIViewController,UITableViewDelegate, UITableViewDataSou
     override func viewWillAppear(animated: Bool){
         super.viewWillAppear(animated)
         
-        var login:NSString = NSUserDefaults.standardUserDefaults().objectForKey("userId") as NSString
-        if (login.length != 0) {
-            
+        var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        var ologin : AnyObject! = defaults.objectForKey(USERID)
+        
+        
+
+        if (ologin != nil) {
+            var login:NSString = ologin as NSString
             if (self.appDelegate().connect()) {
                 println("show buddy list")
                 
             }
             
         }else {
-            
+            var alert:UIAlertView  = UIAlertView()
+            alert.title = "提示"
+            alert.message = "您还没有设置账号"
+            alert.delegate = self
+            alert.addButtonWithTitle("设置")
+            alert.show()
             //设定用户
             self.Account(self)
             
         }
 
+    }
+    func alertView(var alertView:UIAlertView , clickedButtonAtIndex buttonIndex:Int){
+    
+        if (buttonIndex == 0) {
+            self.Account(self)
+        
+        }
+    
+    
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,8 +76,11 @@ class KKViewController: UIViewController,UITableViewDelegate, UITableViewDataSou
     func tableView(tableView: UITableView?, cellForRowAtIndexPath: NSIndexPath?) ->UITableViewCell{
         let identifier:String = "userCell"
         var cell : UITableViewCell? = tableView?.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell
-        if cell {
+        if cell == nil {
             cell = UITableViewCell(style:.Default,reuseIdentifier:identifier)
+        }else
+        {
+            println("cell is nil")
         }
         return cell!
     }
@@ -84,17 +105,17 @@ class KKViewController: UIViewController,UITableViewDelegate, UITableViewDataSou
     //取得当前程序的委托
     func  appDelegate() -> AppDelegate{
     
-        return UIApplication.sharedApplication().delegate as AppDelegate;
+        return UIApplication.sharedApplication().delegate as AppDelegate
     
     }
     
-    //取得当前的XMPPStream
+/*    //取得当前的XMPPStream
     func xmppStream() -> XMPPStream{
     
-        return self.appDelegate().xmppStream!;
+        return self.appDelegate().xmppStream!
     }
-    
 
+*/
     func newBuddyOnline(buddyName:String){
         var i = 0
         for user in onlineUsers{
