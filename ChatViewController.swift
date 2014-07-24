@@ -39,7 +39,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         // Dispose of any resources that can be recreated.
     }
     @IBAction func backClicked(sender : UIBarButtonItem) {
-            self.dismissModalViewControllerAnimated(true)
+            self.dismissViewControllerAnimated(true,completion:nil)
     }
 
 /*    //UITableViewDataSource协议实现

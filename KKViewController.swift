@@ -12,7 +12,7 @@ let PASS:NSString = "Pass"
 let SERVER:NSString = "Server"
 class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,ChatDelegate {
     
-    var onlineUsers = String[]()
+    var onlineUsers = [String]()
     var chatUserName:String = ""
     @IBOutlet var tView : UITableView
 
@@ -29,12 +29,12 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
         super.viewWillAppear(animated)
         
         var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        var ologin : AnyObject! = defaults.objectForKey(USERID)
+        var ologin : String? = defaults.stringForKey(USERID)
         
         
 
-        if (ologin != nil) {
-            var login:NSString = ologin as NSString
+        if  ologin != ""  {
+            var login:NSString = ologin!
             if (self.appDelegate().connect()) {
                 println("show buddy list")
                 
@@ -130,6 +130,7 @@ class KKViewController: UIViewController,UITableViewDataSource,UITableViewDelega
         }
         if i == onlineUsers.count{
             onlineUsers.append(buddyName)
+            print("add frends \(buddyName)")
             self.tView!.reloadData();
         }
 

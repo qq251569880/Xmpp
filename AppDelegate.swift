@@ -10,7 +10,7 @@ import UIKit
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
                             
     var window: UIWindow?
     var xmppStream:XMPPStream?
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         //初始化XMPPStream
         xmppStream = XMPPStream()
-        xmppStream!.addDelegate(self,delegateQueue:dispatch_get_current_queue());
+        xmppStream!.addDelegate(self,delegateQueue:dispatch_get_main_queue());
     
     }
     
@@ -114,25 +114,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //XMPPStreamDelegate协议实现
     //连接服务器
     func xmppStreamDidConnect(sender:XMPPStream ){
-    
+        println("xmppStreamDidConnect \(xmppStream!.isConnected())")
         isOpen = true;
         var error:NSError? ;
         //验证密码
+        println(password)
+        self.goOnline()
         xmppStream!.authenticateWithPassword(password ,error:&error);
-    
+        if error != nil {
+            println(error!)
+        }
     }
     
     //验证通过
     func xmppStreamDidAuthenticate(sender:XMPPStream ){
-    
+        println("xmppStreamDidAuthenticate")
         self.goOnline()
     }
-    
+    func xmppStream(sender:XMPPStream , didNotAuthenticate error:DDXMLElement ){
+        println(error)
+    }
     //收到消息
     func xmppStream(sender:XMPPStream ,didReceiveMessage message:XMPPMessage? ){
     
         //    NSLog(@"message = %@", message);
         if message != nil {
+            println(message)
             var cont:String = message!.elementForName("body").stringValue();
             var from:String = message!.attributeForName("from").stringValue();
             
@@ -148,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //收到好友状态
     func xmppStream(sender:XMPPStream ,didReceivePresence presence:XMPPPresence ){
     
-        //    NSLog(@"presence = %@", presence);
+        println(presence)
         
         //取得好友状态
         var presenceType:NSString = presence.type() //online/offline

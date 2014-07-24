@@ -30,7 +30,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func backClicked(sender : UIBarButtonItem) {
-        self.dismissModalViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true,completion:nil)
     }
 
     @IBAction func loginClicked(sender : UIBarButtonItem) {
@@ -45,7 +45,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             defaults.setObject(pass_text,forKey:PASS)
             defaults.setObject(server_text,forKey:SERVER)
             defaults.synchronize()
-            self.dismissModalViewControllerAnimated(true)
+            self.dismissViewControllerAnimated(true,completion:nil)
             
         }
 
