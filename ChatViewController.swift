@@ -118,7 +118,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         var font:UIFont  = UIFont.systemFontOfSize(18)
         var rect:CGRect = msg.content.boundingRectWithSize(textSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:font], context: nil)
         //var size = msg.content.sizeWithAttributes([NSFontAttributeName:font])
-        rect.size.height += padding*4
+        rect.size.height += padding*2
     
         var height:CGFloat = rect.size.height < 65 ? 65 : rect.size.height;
     
