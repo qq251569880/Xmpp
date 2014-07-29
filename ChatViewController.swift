@@ -62,7 +62,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     }
     //UITableViewDelegate协议实现
     func tableView(tableView:UITableView! ,cellForRowAtIndexPath indexPath:NSIndexPath ) ->UITableViewCell{
-        let padding:CGFloat = 20.0
+        let padding:CGFloat = 10.0
         var identifier:String = "msgCell";
     
         var cell:MessageCell? = tableView?.dequeueReusableCellWithIdentifier(identifier) as? MessageCell
@@ -74,13 +74,11 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         var msg:Message = messages[indexPath.row];
         
         var textSize = CGSize(width: 260.0 ,height: 10000.0)
-        var msglen:Int = 0
-        for ch in msg.content{
-            msglen++
-        }
-        var size = CGSize(width:(msglen * 9),height:30)
+
+        var font:UIFont  = UIFont.systemFontOfSize(18)
+        var rect:CGRect = msg.content.boundingRectWithSize(textSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:font], context: nil)
+        rect.size.width += (padding/2)
         
-        size.width += (padding/2);
         
         cell!.messageContentView.text = msg.content;
         cell!.accessoryType = .None;
@@ -93,15 +91,15 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //背景图
             bgImage = UIImage(named:"BlueBubble2")
             bgImage = bgImage!.stretchableImageWithLeftCapWidth(20,topCapHeight:15)
-            cell!.messageContentView.frame = CGRectMake(padding, padding*2, size.width, size.height)
+            cell!.messageContentView.frame = CGRectMake(rect.origin.x+padding, rect.origin.y+padding*4, rect.size.width, rect.size.height)
             
-            cell!.bgImageView.frame = CGRectMake(cell!.messageContentView.frame.origin.x - padding/2, cell!.messageContentView.frame.origin.y - padding/2 , size.width + padding, size.height + padding/2)
+            cell!.bgImageView.frame = CGRectMake(cell!.messageContentView.frame.origin.x - padding/2, cell!.messageContentView.frame.origin.y - padding/2 , rect.size.width + padding, rect.size.height + padding)
         }else {
             
             bgImage = UIImage(named:"GreenBubble2").stretchableImageWithLeftCapWidth(14, topCapHeight:15)
             
-            cell!.messageContentView.frame = CGRectMake(320-size.width - padding, padding*2, size.width, size.height)
-            cell!.bgImageView.frame = CGRectMake(cell!.messageContentView.frame.origin.x - padding/2, cell!.messageContentView.frame.origin.y - padding/2, size.width + padding, size.height + padding/2)
+            cell!.messageContentView.frame = CGRectMake(320-rect.size.width - padding-rect.origin.x, padding*4+rect.origin.y, rect.size.width, rect.size.height)
+            cell!.bgImageView.frame = CGRectMake(cell!.messageContentView.frame.origin.x - padding/2, cell!.messageContentView.frame.origin.y - padding/2, rect.size.width + padding, rect.size.height + padding)
         }
         
         cell!.bgImageView.image = bgImage;
@@ -117,16 +115,12 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         var msg:Message = messages[indexPath.row];
         
         var textSize = CGSize(width: 260.0 ,height: 10000.0)
-        var msglen:Int = 0
-        for ch in msg.content{
-            msglen++
-        }
-        var size = CGSize(width:(msglen * 10),height:20)
-        
-        
-        size.height += padding*2;
+        var font:UIFont  = UIFont.systemFontOfSize(18)
+        var rect:CGRect = msg.content.boundingRectWithSize(textSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName:font], context: nil)
+        //var size = msg.content.sizeWithAttributes([NSFontAttributeName:font])
+        rect.size.height += padding*4
     
-        var height:CGFloat = size.height < 65 ? 65 : size.height;
+        var height:CGFloat = rect.size.height < 65 ? 65 : rect.size.height;
     
         return height;
     

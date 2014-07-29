@@ -52,7 +52,6 @@ class MessageCell:UITableViewCell {
         messageContentView.editable = false;
         messageContentView.scrollEnabled = false;
         messageContentView.sizeToFit()
-        messageContentView.font = UIFont.systemFontOfSize(15.0)
         contentView.addSubview(messageContentView)
         
 
