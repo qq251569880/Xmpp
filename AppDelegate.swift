@@ -137,7 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
     //收到消息
     func xmppStream(sender:XMPPStream ,didReceiveMessage message:XMPPMessage? ){
     
-        //    NSLog(@"message = %@", message);
+       
         if message != nil {
             println(message)
             var cont:String = message!.elementForName("body").stringValue();
@@ -170,11 +170,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate {
             var srv:String = "macshare.local"
             if (presenceType.isEqualToString("available")) {
                 
-                //用户列表委托(后面讲)
+                //用户列表委托
                 chatDelegate?.newBuddyOnline("\(presenceFromUser)@\(srv)")
                 
             }else if (presenceType.isEqualToString("unavailable")) {
-                //用户列表委托(后面讲)
+                //用户列表委托
                 chatDelegate?.buddyWentOffline("\(presenceFromUser)@\(srv)")
             }
             

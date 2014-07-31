@@ -54,8 +54,6 @@ class MessageCell:UITableViewCell {
         messageContentView.sizeToFit()
         contentView.addSubview(messageContentView)
         
-
-    
     }
 
 }

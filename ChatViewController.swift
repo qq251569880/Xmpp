@@ -182,10 +182,7 @@ class ChatViewController: UIViewController,UITableViewDelegate, UITableViewDataS
 
             //重新刷新tableView
             self.tView.reloadData()
-            
         }
-        
-
     }
 
 }
